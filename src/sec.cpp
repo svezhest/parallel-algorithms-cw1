@@ -1,4 +1,5 @@
 #include "quicksort.h"
+#include "mystd.cpp"
 
 #include <cstddef>
 #include <random>
@@ -25,12 +26,12 @@ void quicksort_impl(std::vector<int> &arr, std::ptrdiff_t from, std::ptrdiff_t t
 
     while (i < r) {
         if (arr[i] < pivot) {
-            std::swap(arr[l], arr[i]);
+            swap(arr[l], arr[i]);
             ++l;
             ++i;
         } else if (arr[i] > pivot) {
             --r;
-            std::swap(arr[i], arr[r]);
+            swap(arr[i], arr[r]);
         } else {
             ++i;
         }

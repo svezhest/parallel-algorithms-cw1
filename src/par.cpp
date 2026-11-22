@@ -1,4 +1,5 @@
 #include "quicksort.h"
+#include "mystd.cpp"
 
 #include <algorithm>
 #include <cstddef>
@@ -25,20 +26,23 @@ void quicksort_impl(std::vector<int> &arr, std::ptrdiff_t from, std::ptrdiff_t t
     std::ptrdiff_t r = to;
     std::ptrdiff_t i = from;
 
+    // note: запуститься на K блоков, каждый последовательно считает сколько больше и меньше pivot,
+    // префиксная сумма дает сдивги, второй проход пишет в tmp
+
     while (i < r) {
         if (arr[i] < pivot) {
-            std::swap(arr[l], arr[i]);
+            swap(arr[l], arr[i]);
             ++l;
             ++i;
         } else if (arr[i] > pivot) {
             --r;
-            std::swap(arr[i], arr[r]);
+            swap(arr[i], arr[r]);
         } else {
             ++i;
         }
     }
 
-    auto size = std::max(l - from, to - r);
+    auto size = max(l - from, to - r);
     if (size > 100'000) {
         parlay::par_do([&] { quicksort_impl(arr, from, l); },
                        [&] { quicksort_impl(arr, r, to); });
