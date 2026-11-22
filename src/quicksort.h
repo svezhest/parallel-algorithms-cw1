@@ -2,4 +2,5 @@
 
 #include <vector>
 
-void quicksort(std::vector<int> &arr);
+void quicksort_seq(std::vector<int> &arr);
+void quicksort_par(std::vector<int> &arr);

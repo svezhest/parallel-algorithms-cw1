@@ -14,7 +14,7 @@ void quicksort_impl(std::vector<int> &arr, std::ptrdiff_t from, std::ptrdiff_t t
 
     std::uniform_int_distribution<std::ptrdiff_t> dist(from, to - 1);
     int pivot = arr[dist(gen)];
-    
+
     std::ptrdiff_t l = from;
     std::ptrdiff_t r = to;
     std::ptrdiff_t i = from;
@@ -38,7 +38,7 @@ void quicksort_impl(std::vector<int> &arr, std::ptrdiff_t from, std::ptrdiff_t t
 
 } // namespace
 
-void quicksort(std::vector<int> &arr) {
+void quicksort_seq(std::vector<int> &arr) {
     std::mt19937 gen(std::random_device{}());
     quicksort_impl(arr, 0, static_cast<std::ptrdiff_t>(arr.size()), gen);
 }
