@@ -4,4 +4,4 @@ set -e
 cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 
-./build/bench
+PARLAY_NUM_THREADS=4 ./build/bench

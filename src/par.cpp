@@ -33,8 +33,14 @@ void quicksort_impl(std::vector<int> &arr, std::ptrdiff_t from, std::ptrdiff_t t
         }
     }
 
-    parlay::par_do([&] { quicksort_impl(arr, from, l, gen); },
+    auto size = std::max(l - from, to - r);
+    if (size > 1'000'000) {
+        parlay::par_do([&] { quicksort_impl(arr, from, l, gen); },
                    [&] { quicksort_impl(arr, r, to, gen); });
+    } else {
+        quicksort_impl(arr, from, l, gen);
+        quicksort_impl(arr, r, to, gen);
+    }
 }
 
 } // namespace
