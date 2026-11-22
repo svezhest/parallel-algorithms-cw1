@@ -14,3 +14,21 @@ FetchContent_MakeAvailable(parlaylib)
 
 add_executable(hello src/main.cpp)
 target_link_libraries(hello PRIVATE parlay)
+
+enable_testing()
+
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
+)
+find_package(GTest REQUIRED)
+
+FetchContent_MakeAvailable(googletest)
+
+add_executable(test_hello test/test.cpp)
+
+target_link_libraries(test_hello PRIVATE parlay GTest::gtest GTest::gtest_main)
+
+include(GoogleTest)
+gtest_discover_tests(test_hello)
