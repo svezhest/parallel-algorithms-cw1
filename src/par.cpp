@@ -1,6 +1,7 @@
 #include "quicksort.h"
 
 #include <cstddef>
+#include <parlay/parallel.h>
 #include <random>
 #include <utility>
 
@@ -32,8 +33,8 @@ void quicksort_impl(std::vector<int> &arr, std::ptrdiff_t from, std::ptrdiff_t t
         }
     }
 
-    quicksort_impl(arr, from, l, gen);
-    quicksort_impl(arr, r, to, gen);
+    parlay::par_do([&] { quicksort_impl(arr, from, l, gen); },
+                   [&] { quicksort_impl(arr, r, to, gen); });
 }
 
 } // namespace

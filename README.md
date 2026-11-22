@@ -1,18 +1,17 @@
 ## Sequential
 
-run 1: 11.8814 s
-run 2: 11.5299 s
-run 3: 11.3797 s
-run 4: 11.4344 s
-run 5: 11.3660 s
-average: 11.5183 s
+run 1: 11.1735 s
+run 2: 11.1892 s
+run 3: 11.0481 s
+run 4: 11.1537 s
+run 5: 11.0946 s
+average: 11.1318 s
 
 ## Parallel
-(NOTE: TBD)
 
-run 1: 11.4125 s
-run 2: 12.2365 s
-run 3: 11.7296 s
-run 4: 13.0176 s
-run 5: 11.6616 s
-average: 12.0116 s
+run 1: 6.5444 s
+run 2: 6.4676 s
+run 3: 6.4781 s
+run 4: 6.5017 s
+run 5: 6.5933 s
+average: 6.5170 s
