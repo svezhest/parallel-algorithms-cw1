@@ -34,11 +34,15 @@ endforeach()
 
 enable_testing()
 
-add_executable(hello src/sec.cpp)
-target_link_libraries(hello PRIVATE parlay)
+add_library(quicksort_seq src/sec.cpp)
+target_include_directories(quicksort_seq PUBLIC src)
+target_link_libraries(quicksort_seq PUBLIC parlay)
+
+add_executable(bench src/bench.cpp)
+target_link_libraries(bench PRIVATE quicksort_seq)
 
 add_executable(test_hello test/test.cpp)
-target_link_libraries(test_hello PRIVATE parlay GTest::gtest_main)
+target_link_libraries(test_hello PRIVATE quicksort_seq GTest::gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(test_hello)

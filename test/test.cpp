@@ -1,23 +1,57 @@
 #include <gtest/gtest.h>
-#include <parlay/parallel.h>
-#include <atomic>
 
-TEST(Test, Test) {
-    std::atomic<int> counter = 0;
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <vector>
 
-    parlay::parallel_for(0, 4, [&counter](int _) {
-        ++counter;
-    });
+#include "quicksort.h"
 
-    ASSERT_EQ(counter, 4);
+namespace {
+
+void expectSorted(std::vector<int> arr) {
+    auto expected = arr;
+    std::sort(expected.begin(), expected.end());
+    quicksort(arr);
+    EXPECT_EQ(arr, expected);
 }
 
-TEST(Failme, Test) {
-    std::atomic<int> counter = 0;
+} // namespace
 
-    parlay::parallel_for(0, 4, [&counter](int _) {
-        ++counter;
-    });
+TEST(Quicksort, Empty) { expectSorted({}); }
 
-    ASSERT_EQ(counter, 3);
+TEST(Quicksort, OneElement) {
+    expectSorted({0});
+    expectSorted({-5});
+}
+
+TEST(Quicksort, TwoElements) {
+    expectSorted({0, 0});
+    expectSorted({0, 1});
+    expectSorted({1, 0});
+    expectSorted({1, 1});
+}
+
+TEST(Quicksort, Sorted) {
+    std::vector<int> arr(20);
+    std::iota(arr.begin(), arr.end(), 0);
+    expectSorted(arr);
+}
+
+TEST(Quicksort, Reversed) {
+    std::vector<int> arr(20);
+    std::iota(arr.rbegin(), arr.rend(), 0);
+    expectSorted(arr);
+}
+
+TEST(Quicksort, Random) {
+    std::mt19937 gen(42);
+    std::uniform_int_distribution<int> dist(-100, 100);
+
+    std::vector<int> arr(20);
+    for (auto &x : arr) {
+        x = dist(gen);
+    }
+
+    expectSorted(arr);
 }
