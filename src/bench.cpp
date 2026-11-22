@@ -6,6 +6,7 @@
 #include <iostream>
 #include <random>
 #include <vector>
+#include <parlay/parallel.h>
 
 namespace {
 
@@ -39,6 +40,9 @@ void bench(const char *title, SortFn sort, const std::vector<int> &base) {
 
 int main() {
     const std::size_t n = 100'000'000;
+
+    parlay::par_do([] {}, [] {}); // прогрев
+    assert(parlay::num_workers() == 4); // надо
 
     std::mt19937 gen(std::random_device{}());
     std::vector<int> base(n);

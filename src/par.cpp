@@ -35,8 +35,10 @@ void quicksort_impl(std::vector<int> &arr, std::ptrdiff_t from, std::ptrdiff_t t
 
     auto size = std::max(l - from, to - r);
     if (size > 1'000'000) {
-        parlay::par_do([&] { quicksort_impl(arr, from, l, gen); },
-                   [&] { quicksort_impl(arr, r, to, gen); });
+        std::mt19937 left_gen(gen());
+        std::mt19937 right_gen(gen());
+        parlay::par_do([&] { quicksort_impl(arr, from, l, left_gen); },
+                       [&] { quicksort_impl(arr, r, to, right_gen); });
     } else {
         quicksort_impl(arr, from, l, gen);
         quicksort_impl(arr, r, to, gen);

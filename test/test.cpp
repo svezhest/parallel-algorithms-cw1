@@ -19,7 +19,6 @@ void expectSorted(SortFn sort, std::vector<int> arr) {
     EXPECT_EQ(arr, expected);
 }
 
-// Runs the same case through both implementations.
 void expectSortedByBoth(std::vector<int> arr) {
     expectSorted(quicksort_seq, arr);
     expectSorted(quicksort_par, arr);
@@ -74,6 +73,16 @@ TEST(Quicksort, RandomLargeWithDuplicates) {
     std::vector<int> arr(100'000);
     for (auto &x : arr) {
         x = dist(gen);
+    }
+
+    expectSortedByBoth(arr);
+}
+
+TEST(Quicksort, Huge) {
+    std::mt19937 gen(123);
+    std::vector<int> arr(20'000'000);
+    for (auto &x : arr) {
+        x = static_cast<int>(gen());
     }
 
     expectSortedByBoth(arr);
