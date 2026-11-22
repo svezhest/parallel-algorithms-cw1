@@ -40,9 +40,11 @@ void bench(const char *title, SortFn sort, const std::vector<int> &base) {
 
 int main() {
     const std::size_t n = 100'000'000;
-
-    parlay::par_do([] {}, [] {}); // прогрев
-    assert(parlay::num_workers() == 4); // надо
+    
+    if (parlay::num_workers() != 4) {
+        std::cerr << "expected 4 workers, got " << parlay::num_workers() << "\n";
+        return 1;
+    }
 
     std::mt19937 gen(std::random_device{}());
     std::vector<int> base(n);

@@ -38,6 +38,9 @@ add_library(quicksort src/sec.cpp src/par.cpp)
 target_include_directories(quicksort PUBLIC src)
 target_link_libraries(quicksort PUBLIC parlay)
 
+# lost wakeups!!!
+target_compile_definitions(quicksort PUBLIC PARLAY_ELASTIC_PARALLELISM=false)
+
 add_executable(bench src/bench.cpp)
 target_link_libraries(bench PRIVATE quicksort)
 
